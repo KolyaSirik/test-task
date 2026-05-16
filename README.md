@@ -32,36 +32,12 @@ make setup
 
 This will install dependencies, set up `.env`, start Docker containers, and run migrations.
 
-### Manual Installation
-
-2.  **Install dependencies**:
-    ```bash
-    composer install
-    npm install
-    ```
-
-3.  **Environment Setup**:
-    ```bash
-    cp .env.example .env
-    php artisan key:generate
-    ```
-
-4.  **Start Infrastructure (Docker)**:
-    ```bash
-    docker compose up -d
-    ```
-
-5.  **Database Migration**:
-    ```bash
-    php artisan migrate
-    ```
-
 ## 🛠 Development
 
 To start the development server (Vite, Laravel, Queue, and Scheduler):
 
 ```bash
-composer run dev
+make dev
 ```
 
 This command runs the following services concurrently:

@@ -7,10 +7,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:80"
+    env_file:
+      - .env
     environment:
-      - APP_ENV=local
-      - APP_KEY=base64:w/A2w58t1y+rA+t3z4qL0Y9rSj3/aD8H6g5z+h9uG0c= # Replace with actual key
-      - APP_DEBUG=true
       - DB_CONNECTION=pgsql
       - DB_HOST=db
       - DB_PORT=5432
@@ -20,8 +19,10 @@ services:
       - REDIS_HOST=redis
       - RUN_MIGRATIONS=true
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
     networks:
       - laravel
 
@@ -35,6 +36,11 @@ services:
       - "5432:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U laravel"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - laravel
 

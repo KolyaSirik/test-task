@@ -1,5 +1,7 @@
 # 🌐 Domain Monitoring System
 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://test-task-crf0.onrender.com)
+
 A premium, modern web application built with **Laravel 13**, **Vue 3**, and **Inertia.js** for real-time domain availability monitoring.
 
 ## ✨ Features

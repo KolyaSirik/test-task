@@ -1,18 +1,10 @@
-name: linter
+name: Linter
 
 on:
   push:
-    branches:
-      - develop
-      - main
-      - master
-      - workos
+    branches: [ main, feature/* ]
   pull_request:
-    branches:
-      - develop
-      - main
-      - master
-      - workos
+    branches: [ main ]
 
 permissions:
   contents: write
@@ -21,19 +13,26 @@ jobs:
   quality:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.4'
+          php-version: '8.5'
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
+          coverage: none
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
       - name: Install Dependencies
         run: |
           composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
           npm install
 
-      - name: Run Pint
+      - name: Run PHP Lint (Pint)
         run: composer lint
 
       - name: Format Frontend
@@ -42,8 +41,8 @@ jobs:
       - name: Lint Frontend
         run: npm run lint
 
+      # Optional: Auto-commit fixes if any were made
       # - name: Commit Changes
-      #   uses: stefanzweifel/git-auto-commit-action@v7
+      #   uses: stefanzweifel/git-auto-commit-action@v5
       #   with:
-      #     commit_message: fix code style
-      #     commit_options: '--no-verify'
+      #     commit_message: "style: fix code style violations"

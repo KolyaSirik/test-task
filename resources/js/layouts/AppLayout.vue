@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/app/AppSidebarLayout.vue';
+import SidebarLayout from '@/layouts/app/AppSidebarLayout.vue';
 import type { BreadcrumbItem } from '@/types';
 
 const { breadcrumbs = [] } = defineProps<{
@@ -8,7 +8,7 @@ const { breadcrumbs = [] } = defineProps<{
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbs">
+    <SidebarLayout :breadcrumbs="breadcrumbs">
         <slot />
-    </AppLayout>
+    </SidebarLayout>
 </template>

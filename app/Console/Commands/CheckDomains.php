@@ -18,10 +18,17 @@ class CheckDomains extends Command
      */
     public function handle(): void
     {
+        $driver = \Illuminate\Support\Facades\DB::getDriverName();
+        
         $domains = Domain::query()
-            ->where(function ($query) {
-                $query->whereNull('last_checked_at')
-                    ->orWhereRaw('last_checked_at + (check_interval || \' minutes\')::interval <= now()');
+            ->where(function ($query) use ($driver) {
+                $query->whereNull('last_checked_at');
+                
+                if ($driver === 'sqlite') {
+                    $query->orWhereRaw('datetime(last_checked_at, "+" || check_interval || " minutes") <= datetime("now")');
+                } else {
+                    $query->orWhereRaw('last_checked_at + (check_interval || \' minutes\')::interval <= now()');
+                }
             })
             ->get();
 

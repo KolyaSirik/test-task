@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 # Set correct permissions
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
@@ -15,9 +16,6 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-# Start PHP-FPM in background
-php-fpm -D
-
-# Start Nginx in foreground
-echo "Starting Nginx..."
-nginx -g "daemon off;"
+# Start Supervisor (which starts Nginx, FPM, Worker and Scheduler)
+echo "Starting Supervisor..."
+/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

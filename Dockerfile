@@ -16,11 +16,12 @@ RUN cp .env.example .env && php artisan key:generate
 RUN npm run build
 
 # Stage 3: Production image
-FROM php:8.3-fpm-alpine
+FROM php:8.4-fpm-alpine
 
-# Install system dependencies and Nginx
+# Install system dependencies, Nginx, and Supervisor
 RUN apk add --no-cache \
     nginx \
+    supervisor \
     postgresql-dev \
     libzip-dev \
     zip \
@@ -48,8 +49,9 @@ COPY --from=frontend /app/public/build/ /var/www/html/public/build/
 # Copy application files
 COPY . /var/www/html/
 
-# Copy Nginx configuration
+# Copy Nginx and Supervisor configurations
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Copy and setup entrypoint script
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh

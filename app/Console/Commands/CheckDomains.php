@@ -21,7 +21,7 @@ class CheckDomains extends Command
         $domains = Domain::query()
             ->where(function ($query) {
                 $query->whereNull('last_checked_at')
-                    ->orWhereRaw('datetime(last_checked_at, "+" || check_interval || " minutes") <= datetime("now")');
+                    ->orWhereRaw('last_checked_at + (check_interval || \' minutes\')::interval <= now()');
             })
             ->get();
 

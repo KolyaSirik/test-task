@@ -18,17 +18,21 @@ A premium, modern web application built with **Laravel 13**, **Vue 3**, and **In
 ### Prerequisites
 
 -   **PHP 8.5+**
--   **Node.js 20+**
+-   **Node.js 22+**
+-   **Docker & Docker Compose**
 -   **Composer**
--   **SQLite** (or any supported database)
 
-### Installation
+### Quick Setup
 
-1.  **Clone the repository**:
-    ```bash
-    git clone <repository-url>
-    cd test-task
-    ```
+If you have `make` installed, you can set up everything with a single command:
+
+```bash
+make setup
+```
+
+This will install dependencies, set up `.env`, start Docker containers, and run migrations.
+
+### Manual Installation
 
 2.  **Install dependencies**:
     ```bash
@@ -42,20 +46,30 @@ A premium, modern web application built with **Laravel 13**, **Vue 3**, and **In
     php artisan key:generate
     ```
 
-4.  **Database Migration**:
+4.  **Start Infrastructure (Docker)**:
+    ```bash
+    docker compose up -d
+    ```
+
+5.  **Database Migration**:
     ```bash
     php artisan migrate
     ```
 
 ## 🛠 Development
 
-To start the development server (both Vite and Laravel):
+To start the development server (Vite, Laravel, Queue, and Scheduler):
 
 ```bash
 composer run dev
 ```
 
-This command runs both the PHP server and the Vite development server concurrently, ensuring Hot Module Replacement (HMR) for the frontend.
+This command runs the following services concurrently:
+-   **Server**: `php artisan serve`
+-   **Queue**: `php artisan queue:listen`
+-   **Scheduler**: `php artisan schedule:work` (for automated domain checks)
+-   **Logs**: `php artisan pail`
+-   **Vite**: `npm run dev`
 
 ## 🤖 Automated Checks
 
@@ -65,12 +79,13 @@ To manually trigger a check of all domains:
 php artisan app:check-domains
 ```
 
-For production, this command is already scheduled to run every minute in `routes/console.php`.
+The system is configured to use **PostgreSQL** interval logic for accurate check timing.
 
 ## 📦 Tech Stack
 
 -   **Backend**: Laravel 13 (Fortify for Auth)
 -   **Frontend**: Vue 3, Inertia.js v3
+-   **Database**: PostgreSQL 16 (via Docker)
 -   **Styling**: Tailwind CSS v4
 -   **Routing**: Laravel Wayfinder
 -   **Icons**: Lucide Vue Next

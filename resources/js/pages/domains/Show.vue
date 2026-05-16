@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import domainRoutes from '@/routes/domains';
 import type { Domain, DomainCheck } from '@/types';
 
-const props = defineProps<{
+defineProps<{
     domain: Domain;
     checks: {
         data: DomainCheck[];

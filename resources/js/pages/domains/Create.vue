@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import domainRoutes from '@/routes/domains';
 import DomainForm from './Form.vue';
 
 </script>

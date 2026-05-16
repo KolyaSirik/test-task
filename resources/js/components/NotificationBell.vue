@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Bell, Check, Globe, AlertTriangle } from 'lucide-vue-next';
+import { Bell, Globe, AlertTriangle } from 'lucide-vue-next';
 import { usePage, router } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import { Button } from '@/components/ui/button';

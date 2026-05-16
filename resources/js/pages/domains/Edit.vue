@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import domainRoutes from '@/routes/domains';
 import DomainForm from './Form.vue';
 import type { Domain } from '@/types';
 
-const props = defineProps<{
+defineProps<{
     domain: Domain;
 }>();
 

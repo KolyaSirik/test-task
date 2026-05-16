@@ -10,7 +10,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import domainRoutes from '@/routes/domains';
-import type { BreadcrumbItem, Domain } from '@/types';
+import type { Domain } from '@/types';
 
 defineProps<{
     domains: Domain[];

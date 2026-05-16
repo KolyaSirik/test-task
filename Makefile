@@ -1,4 +1,4 @@
-.PHONY: install up down restart migrate fresh seed dev setup
+.PHONY: install up down restart migrate fresh seed dev setup test
 
 install:
 	composer install
@@ -23,6 +23,9 @@ fresh:
 
 seed:
 	php artisan db:seed
+
+test:
+	php artisan test --compact
 
 dev:
 	composer run dev
